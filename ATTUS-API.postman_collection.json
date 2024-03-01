@@ -226,6 +226,14 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "DefinirEnderecoPrincipal",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		}
