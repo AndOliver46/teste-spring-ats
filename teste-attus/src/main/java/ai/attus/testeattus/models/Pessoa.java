@@ -21,6 +21,16 @@ public class Pessoa implements Serializable {
     @OneToMany(mappedBy = "pessoa")
     private Set<Endereco> enderecos = new HashSet<>();
 
+    public Pessoa() {
+    }
+
+    public Pessoa(UUID id, String nome, UUID enderecoPrincipal, Set<Endereco> enderecos) {
+        this.id = id;
+        this.nome = nome;
+        this.enderecoPrincipal = enderecoPrincipal;
+        this.enderecos = enderecos;
+    }
+
     public UUID getId() {
         return id;
     }
