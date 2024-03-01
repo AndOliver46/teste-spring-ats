@@ -14,4 +14,6 @@ public interface IEnderecoService {
     EnderecoDTO consultarEndereco(UUID id);
 
     List<EnderecoDTO> consultarEnderecosPessoa(UUID idPessoa);
+
+    EnderecoDTO definirEnderecoPrincipal(UUID idPessoa, UUID idEndereco);
 }

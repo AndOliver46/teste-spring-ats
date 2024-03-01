@@ -48,6 +48,7 @@ public class EnderecoController {
 
         EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
         resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).editarEndereco(newEnderecoDTO, newEnderecoDTO.getId())).withRel("editar"));
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).definirEnderecoPrincipal(newEnderecoDTO.getIdPessoa() ,newEnderecoDTO.getId())).withRel("definirPrincipal"));
 
         return ResponseEntity.ok(resource);
     }
@@ -64,6 +65,16 @@ public class EnderecoController {
         }).toList();
 
         return ResponseEntity.ok(resources);
+    }
+
+    @PutMapping("/pessoa/{idPessoa}/enderecoPrincipal/{idEndereco}")
+    public ResponseEntity<EntityModel<EnderecoDTO>> definirEnderecoPrincipal(@PathVariable UUID idPessoa, @PathVariable UUID idEndereco){
+        EnderecoDTO newEnderecoDTO = enderecoService.definirEnderecoPrincipal(idPessoa, idEndereco);
+
+        EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).consultarEndereco(newEnderecoDTO.getId())).withSelfRel());
+
+        return ResponseEntity.ok(resource);
     }
 
 

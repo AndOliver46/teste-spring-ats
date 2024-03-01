@@ -4,6 +4,7 @@ import ai.attus.testeattus.dtos.EnderecoDTO;
 import ai.attus.testeattus.models.Endereco;
 import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.repositories.EnderecoRepository;
+import ai.attus.testeattus.services.exceptions.EnderecoNaoPertenceException;
 import ai.attus.testeattus.services.exceptions.EnderecoNotFoundException;
 import ai.attus.testeattus.services.interfaces.IEnderecoService;
 import ai.attus.testeattus.services.interfaces.IPessoaService;
@@ -59,6 +60,7 @@ public class EnderecoService implements IEnderecoService {
         EnderecoDTO enderecoDTO= new EnderecoDTO();
 
         BeanUtils.copyProperties(endereco, enderecoDTO);
+        enderecoDTO.setIdPessoa(endereco.getPessoa().getId());
 
         return enderecoDTO;
     }
@@ -70,7 +72,26 @@ public class EnderecoService implements IEnderecoService {
             EnderecoDTO enderecoDTO = new EnderecoDTO();
 
             BeanUtils.copyProperties(endereco, enderecoDTO);
+            enderecoDTO.setIdPessoa(pessoa.getId());
+
             return enderecoDTO;
         }).toList();
+    }
+
+    @Override
+    public EnderecoDTO definirEnderecoPrincipal(UUID idPessoa, UUID idEndereco) {
+
+        Pessoa pessoa = pessoaService.buscarPessoa(idPessoa);
+
+        boolean enderecoPertence = pessoa.getEnderecos().stream().anyMatch(endereco -> endereco.getId().compareTo(idEndereco) == 0);
+
+        if (enderecoPertence){
+            pessoa.setEnderecoPrincipal(idEndereco);
+            pessoaService.salvarPessoa(pessoa);
+
+            return consultarEndereco(idEndereco);
+        }else {
+            throw new EnderecoNaoPertenceException("Esse endereco nao pertence ao usuario informado.");
+        }
     }
 }

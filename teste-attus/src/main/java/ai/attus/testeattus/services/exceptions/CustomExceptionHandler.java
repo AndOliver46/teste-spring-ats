@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +27,17 @@ public class CustomExceptionHandler {
         CustomError customException = new CustomError();
         customException.setTimestamp(LocalDateTime.now());
         customException.setStatus(HttpStatus.NOT_FOUND);
+        customException.setPath(request.getRequestURI());
+        customException.setError(ex.getMessage());
+
+        return ResponseEntity.status(customException.getStatus()).body(customException);
+    }
+
+    @ExceptionHandler(EnderecoNaoPertenceException.class)
+    public ResponseEntity<CustomError> pessoaNotFoundException(EnderecoNaoPertenceException ex, HttpServletRequest request){
+        CustomError customException = new CustomError();
+        customException.setTimestamp(LocalDateTime.now());
+        customException.setStatus(HttpStatus.BAD_REQUEST);
         customException.setPath(request.getRequestURI());
         customException.setError(ex.getMessage());
 

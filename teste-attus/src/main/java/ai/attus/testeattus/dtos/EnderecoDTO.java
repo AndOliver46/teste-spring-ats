@@ -1,10 +1,6 @@
 package ai.attus.testeattus.dtos;
 
 import ai.attus.testeattus.enums.Estado;
-import ai.attus.testeattus.models.Pessoa;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 import java.util.UUID;
 
@@ -16,6 +12,7 @@ public class EnderecoDTO {
     private String numero;
     private String cidade;
     private Estado estado;
+    private UUID idPessoa;
 
     public UUID getId() {
         return id;
@@ -63,5 +60,13 @@ public class EnderecoDTO {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public UUID getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(UUID idPessoa) {
+        this.idPessoa = idPessoa;
     }
 }
