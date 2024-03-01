@@ -5,6 +5,8 @@ import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.repositories.PessoaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,10 +56,10 @@ public class PessoaService implements IPessoaService{
     }
 
 
-    public List<PessoaDTO> buscarPessoas() {
-        List<Pessoa> pessoaList = pessoaRepository.findAll();
+    public List<PessoaDTO> buscarPessoas(Pageable pageable) {
+        Page<Pessoa> pessoaList = pessoaRepository.findAll(pageable);
 
-        return pessoaList.stream().map(pessoa -> {
+        return pessoaList.getContent().stream().map(pessoa -> {
             PessoaDTO pessoaDTO = new PessoaDTO();
             BeanUtils.copyProperties(pessoa, pessoaDTO);
             return pessoaDTO;
