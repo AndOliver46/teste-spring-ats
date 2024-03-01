@@ -50,7 +50,7 @@ public class PessoaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<PessoaEnderecoDTO>> buscarPessoa(@PathVariable UUID id){
-        PessoaEnderecoDTO pessoaEnderecoDTO = pessoaService.buscarPessoa(id);
+        PessoaEnderecoDTO pessoaEnderecoDTO = pessoaService.buscarPessoaEndereco(id);
 
         EntityModel<PessoaEnderecoDTO> resource = EntityModel.of(pessoaEnderecoDTO);
         resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaEnderecoDTO, pessoaEnderecoDTO.getId())).withRel("editar"));

@@ -2,6 +2,7 @@ package ai.attus.testeattus.services.interfaces;
 
 import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
+import ai.attus.testeattus.models.Pessoa;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -15,5 +16,10 @@ public interface IPessoaService {
 
     PessoaDTO editarPessoa(PessoaDTO pessoaDTO, UUID id);
 
-    PessoaEnderecoDTO buscarPessoa(UUID id);
+    PessoaEnderecoDTO buscarPessoaEndereco(UUID id);
+
+    Pessoa buscarPessoa(UUID id);
+
+    void salvarPessoa(Pessoa pessoa);
+
 }

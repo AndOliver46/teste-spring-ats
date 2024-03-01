@@ -18,7 +18,7 @@ import java.util.UUID;
 @Transactional
 public class PessoaService implements IPessoaService {
 
-    private PessoaRepository pessoaRepository;
+    private final PessoaRepository pessoaRepository;
 
     public PessoaService(PessoaRepository pessoaRepository) {
         this.pessoaRepository = pessoaRepository;
@@ -45,8 +45,7 @@ public class PessoaService implements IPessoaService {
         return pessoaDTOAtualizada;
     }
 
-    @Override
-    public PessoaEnderecoDTO buscarPessoa(UUID id) {
+    public PessoaEnderecoDTO buscarPessoaEndereco(UUID id) {
 
         Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
         PessoaEnderecoDTO pessoaDTO = new PessoaEnderecoDTO();
@@ -57,6 +56,13 @@ public class PessoaService implements IPessoaService {
         return pessoaDTO;
     }
 
+    public Pessoa buscarPessoa(UUID id) {
+        return pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+    }
+
+    public void salvarPessoa(Pessoa pessoa) {
+        pessoaRepository.save(pessoa);
+    }
 
     public List<PessoaDTO> buscarPessoas(Pageable pageable) {
         Page<Pessoa> pessoaList = pessoaRepository.findAll(pageable);
