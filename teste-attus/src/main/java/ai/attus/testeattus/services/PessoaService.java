@@ -30,8 +30,9 @@ public class PessoaService implements IPessoaService {
     public PessoaDTO criarPessoa(PessoaDTO pessoaDTO){
         Pessoa pessoa = new Pessoa();
         BeanUtils.copyProperties(pessoaDTO, pessoa);
-        pessoaRepository.save(pessoa);
-        BeanUtils.copyProperties(pessoa, pessoaDTO);
+        Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+
+        BeanUtils.copyProperties(pessoaSalva, pessoaDTO);
 
         return pessoaDTO;
     }
