@@ -14,7 +14,9 @@ public class Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = true)
     private UUID enderecoPrincipal;
 
     //Association

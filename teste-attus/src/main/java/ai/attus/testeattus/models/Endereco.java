@@ -14,13 +14,18 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID endereco;
+    @Column(nullable = false)
     private String logradouro;
+    @Column(nullable = false)
     private String cep;
+    @Column(nullable = false)
     private String numero;
+    @Column(nullable = false)
     private String cidade;
+    @Column(nullable = false)
     private Estado estado;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Pessoa pessoa;
 
     public UUID getEndereco() {
