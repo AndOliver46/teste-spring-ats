@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "6d894563-7bea-4422-8b01-cf25ff7bf99d",
+		"name": "ATTUS-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23677077"
+	},
+	"item": [
+		{
+			"name": "PessoaController",
+			"item": [
+				{
+					"name": "CriarPessoa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Erica\",\r\n    \"dataNascimento\": \"2000-02-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditarPessoa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dataNascimento\": \"1966-02-07\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/editar/3f3faac0-6f2b-4f80-919e-3f7b1ef9f527",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"editar",
+								"3f3faac0-6f2b-4f80-919e-3f7b1ef9f527"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarPessoa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/3f3faac0-6f2b-4f80-919e-3f7b1ef9f527",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"3f3faac0-6f2b-4f80-919e-3f7b1ef9f527"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarTodasPessoas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas?page=0&size=5&sort=nome,asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "nome,asc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EnderecoController",
+			"item": [
+				{
+					"name": "CriarEndereco",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"logradouro\": \"Rua Exemplo\",\r\n  \"cep\": \"12345-678\",\r\n  \"numero\": \"123\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": \"SP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/enderecos/novo/88e5cec9-ae22-4dc0-9fbb-4211d9da6b79",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"enderecos",
+								"novo",
+								"88e5cec9-ae22-4dc0-9fbb-4211d9da6b79"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditarEndereco",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numero\": \"9999555599\",\r\n    \"cidade\": \"Embu Das Artes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/enderecos/editar/1a1b2c7f-2e36-4c0b-a166-5dcd1454ef52",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"enderecos",
+								"editar",
+								"1a1b2c7f-2e36-4c0b-a166-5dcd1454ef52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ConsultarEndereco",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/enderecos/9e2785f7-954f-4df5-9474-0e69ded981b2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"enderecos",
+								"9e2785f7-954f-4df5-9474-0e69ded981b2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarEnderecosPessoa",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
