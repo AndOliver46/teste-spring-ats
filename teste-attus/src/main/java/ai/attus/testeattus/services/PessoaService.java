@@ -5,6 +5,7 @@ import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
 import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.repositories.PessoaRepository;
+import ai.attus.testeattus.services.exceptions.PessoaNotFoundException;
 import ai.attus.testeattus.services.interfaces.IPessoaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -31,23 +32,25 @@ public class PessoaService implements IPessoaService {
         BeanUtils.copyProperties(pessoaDTO, pessoa);
         pessoaRepository.save(pessoa);
         BeanUtils.copyProperties(pessoa, pessoaDTO);
+
         return pessoaDTO;
     }
 
     public PessoaDTO editarPessoa(PessoaDTO pessoaDTO, UUID id) {
-        Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        PessoaDTO pessoaDTOAtualizada = new PessoaDTO();
+
+        Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new PessoaNotFoundException("Pessoa não encontrada."));
         pessoa.atualizarDados(pessoaDTO);
 
         pessoaRepository.save(pessoa);
 
-        PessoaDTO pessoaDTOAtualizada = new PessoaDTO();
         BeanUtils.copyProperties(pessoa, pessoaDTOAtualizada);
 
         return pessoaDTOAtualizada;
     }
 
     public PessoaEnderecoDTO buscarPessoaEndereco(UUID id) {
-        Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new PessoaNotFoundException("Pessoa não encontrada."));
         PessoaEnderecoDTO pessoaDTO = new PessoaEnderecoDTO();
 
         BeanUtils.copyProperties(pessoa, pessoaDTO);
@@ -63,7 +66,7 @@ public class PessoaService implements IPessoaService {
     }
 
     public Pessoa buscarPessoa(UUID id) {
-        return pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        return pessoaRepository.findById(id).orElseThrow(() -> new PessoaNotFoundException("Pessoa não encontrada."));
     }
 
     public void salvarPessoa(Pessoa pessoa) {

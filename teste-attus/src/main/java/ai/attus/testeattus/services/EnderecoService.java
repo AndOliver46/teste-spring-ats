@@ -4,6 +4,7 @@ import ai.attus.testeattus.dtos.EnderecoDTO;
 import ai.attus.testeattus.models.Endereco;
 import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.repositories.EnderecoRepository;
+import ai.attus.testeattus.services.exceptions.EnderecoNotFoundException;
 import ai.attus.testeattus.services.interfaces.IEnderecoService;
 import ai.attus.testeattus.services.interfaces.IPessoaService;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +28,6 @@ public class EnderecoService implements IEnderecoService {
     }
 
     public EnderecoDTO criarEnderecoPessoa(EnderecoDTO enderecoDTO, UUID idPessoa) {
-
         Endereco endereco = new Endereco();
         BeanUtils.copyProperties(enderecoDTO, endereco);
 
@@ -39,11 +39,12 @@ public class EnderecoService implements IEnderecoService {
         pessoaService.salvarPessoa(pessoa);
 
         BeanUtils.copyProperties(endereco, enderecoDTO);
+
         return enderecoDTO;
     }
 
     public EnderecoDTO editarEndereco(EnderecoDTO enderecoDTO, UUID id) {
-        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new EnderecoNotFoundException("Endereço não encontrado."));
 
         endereco.atualizarDados(enderecoDTO);
         enderecoRepository.save(endereco);
@@ -54,7 +55,7 @@ public class EnderecoService implements IEnderecoService {
     }
 
     public EnderecoDTO consultarEndereco(UUID id) {
-        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new EnderecoNotFoundException("Endereço não encontrado."));
         EnderecoDTO enderecoDTO= new EnderecoDTO();
 
         BeanUtils.copyProperties(endereco, enderecoDTO);
