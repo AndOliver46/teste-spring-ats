@@ -40,4 +40,16 @@ public class EnderecoService implements IEnderecoService {
         BeanUtils.copyProperties(endereco, enderecoDTO);
         return enderecoDTO;
     }
+
+    @Override
+    public EnderecoDTO editarEndereco(EnderecoDTO enderecoDTO, UUID id) {
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+
+        endereco.atualizarDados(enderecoDTO);
+        enderecoRepository.save(endereco);
+
+        BeanUtils.copyProperties(endereco, enderecoDTO);
+
+        return enderecoDTO;
+    }
 }

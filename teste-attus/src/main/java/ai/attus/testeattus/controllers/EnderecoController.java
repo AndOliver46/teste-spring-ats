@@ -29,5 +29,15 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
 
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<EntityModel<EnderecoDTO>> editarEndereco(@RequestBody EnderecoDTO enderecoDTO, @PathVariable UUID id){
+        EnderecoDTO newEnderecoDTO = enderecoService.editarEndereco(enderecoDTO, id);
+
+        EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
+        //resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newEnderecoDTO.getId())).withSelfRel());
+
+        return ResponseEntity.ok(resource);
+    }
+
 
 }

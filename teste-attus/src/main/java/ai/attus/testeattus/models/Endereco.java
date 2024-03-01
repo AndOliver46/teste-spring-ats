@@ -1,5 +1,6 @@
 package ai.attus.testeattus.models;
 
+import ai.attus.testeattus.dtos.EnderecoDTO;
 import ai.attus.testeattus.enums.Estado;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -98,5 +99,13 @@ public class Endereco implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(logradouro, cep, numero, cidade, estado);
+    }
+
+    public void atualizarDados(EnderecoDTO enderecoDTO) {
+        this.logradouro = enderecoDTO.getLogradouro() != null ? enderecoDTO.getLogradouro() : this.logradouro;
+        this.cep = enderecoDTO.getCep() != null ? enderecoDTO.getCep() : this.cep;
+        this.numero = enderecoDTO.getNumero() != null ? enderecoDTO.getNumero() : this.numero;
+        this.cidade = enderecoDTO.getCidade() != null ? enderecoDTO.getCidade() : this.cidade;
+        this.estado = enderecoDTO.getEstado() != null ? enderecoDTO.getEstado() : this.estado;
     }
 }

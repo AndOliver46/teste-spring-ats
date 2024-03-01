@@ -33,14 +33,13 @@ public class PessoaService implements IPessoaService {
     }
 
     public PessoaDTO editarPessoa(PessoaDTO pessoaDTO, UUID id) {
-
         Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        pessoa.atualizarDados(pessoaDTO);
 
-        Pessoa pessoaAtualizada = pessoa.atualizarDados(pessoaDTO);
-        pessoaRepository.save(pessoaAtualizada);
+        pessoaRepository.save(pessoa);
 
         PessoaDTO pessoaDTOAtualizada = new PessoaDTO();
-        BeanUtils.copyProperties(pessoaAtualizada, pessoaDTOAtualizada);
+        BeanUtils.copyProperties(pessoa, pessoaDTOAtualizada);
 
         return pessoaDTOAtualizada;
     }

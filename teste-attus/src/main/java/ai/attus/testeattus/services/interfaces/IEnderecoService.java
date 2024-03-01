@@ -8,4 +8,5 @@ public interface IEnderecoService {
 
     EnderecoDTO criarEnderecoPessoa(EnderecoDTO enderecoDTO, UUID idPessoa);
 
+    EnderecoDTO editarEndereco(EnderecoDTO enderecoDTO, UUID id);
 }
