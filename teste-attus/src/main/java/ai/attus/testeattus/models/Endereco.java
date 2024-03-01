@@ -1,6 +1,7 @@
 package ai.attus.testeattus.models;
 
 import ai.attus.testeattus.enums.Estado;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,9 +24,11 @@ public class Endereco implements Serializable {
     @Column(nullable = false)
     private String cidade;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Pessoa pessoa;
 
     public UUID getEndereco() {
@@ -95,17 +98,5 @@ public class Endereco implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(logradouro, cep, numero, cidade, estado);
-    }
-
-    @Override
-    public String toString() {
-        return "Endereco{" +
-                "endereco=" + endereco +
-                ", logradouro='" + logradouro + '\'' +
-                ", cep='" + cep + '\'' +
-                ", numero='" + numero + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", estado=" + estado +
-                '}';
     }
 }

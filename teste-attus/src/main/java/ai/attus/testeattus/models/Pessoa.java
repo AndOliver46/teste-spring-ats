@@ -20,7 +20,7 @@ public class Pessoa implements Serializable {
     private UUID enderecoPrincipal;
 
     //Association
-    @OneToMany(mappedBy = "pessoa")
+    @OneToMany(mappedBy = "pessoa", fetch = FetchType.EAGER)
     private Set<Endereco> enderecos = new HashSet<>();
 
     public Pessoa() {
@@ -63,15 +63,5 @@ public class Pessoa implements Serializable {
 
     public void setEnderecos(Set<Endereco> enderecos) {
         this.enderecos = enderecos;
-    }
-
-    @Override
-    public String toString() {
-        return "Pessoa{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", enderecoPrincipal=" + enderecoPrincipal +
-                ", enderecos=" + enderecos +
-                '}';
     }
 }
