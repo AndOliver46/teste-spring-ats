@@ -2,7 +2,7 @@ package ai.attus.testeattus.controllers;
 
 import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
-import ai.attus.testeattus.services.IPessoaService;
+import ai.attus.testeattus.services.interfaces.IPessoaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;

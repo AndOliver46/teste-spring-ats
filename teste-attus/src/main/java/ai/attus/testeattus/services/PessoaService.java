@@ -4,6 +4,7 @@ import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
 import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.repositories.PessoaRepository;
+import ai.attus.testeattus.services.interfaces.IPessoaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class PessoaService implements IPessoaService{
+public class PessoaService implements IPessoaService {
 
     private PessoaRepository pessoaRepository;
 

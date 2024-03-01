@@ -1,4 +1,4 @@
-package ai.attus.testeattus.services;
+package ai.attus.testeattus.services.interfaces;
 
 import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
