@@ -4,6 +4,8 @@ import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.repositories.PessoaRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class PessoaService implements IPessoaService{
 
     private PessoaRepository pessoaRepository;
@@ -26,7 +29,6 @@ public class PessoaService implements IPessoaService{
         return pessoaDTO;
     }
 
-    @Override
     public PessoaDTO editarPessoa(PessoaDTO pessoaDTO, UUID id) {
 
         Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
@@ -40,7 +42,18 @@ public class PessoaService implements IPessoaService{
         return pessoaDTOAtualizada;
     }
 
-    @Transactional
+    @Override
+    public PessoaDTO buscarPessoa(UUID id) {
+
+        Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        PessoaDTO pessoaDTO = new PessoaDTO();
+
+        BeanUtils.copyProperties(pessoa, pessoaDTO);
+
+        return pessoaDTO;
+    }
+
+
     public List<PessoaDTO> buscarPessoas() {
         List<Pessoa> pessoaList = pessoaRepository.findAll();
 

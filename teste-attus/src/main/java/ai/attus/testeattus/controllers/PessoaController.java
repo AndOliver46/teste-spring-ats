@@ -35,6 +35,12 @@ public class PessoaController {
         return ResponseEntity.ok(newPessoaDTO);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaDTO> buscarPessoa(@PathVariable UUID id){
+        PessoaDTO pessoaDTO = pessoaService.buscarPessoa(id);
+        return ResponseEntity.ok(pessoaDTO);
+    }
+
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> buscarPessoas(){
         List<PessoaDTO> pessoas = pessoaService.buscarPessoas();
