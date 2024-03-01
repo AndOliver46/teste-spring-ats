@@ -1,13 +1,13 @@
 package ai.attus.testeattus.controllers;
 
+import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.models.Pessoa;
 import ai.attus.testeattus.services.IPessoaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,10 +23,15 @@ public class PessoaController {
         this.pessoaService = pessoaService;
     }
 
+    @PostMapping
+    public ResponseEntity<PessoaDTO> criarPessoa(@RequestBody PessoaDTO pessoaDTO){
+        PessoaDTO newPessoaDTO = pessoaService.criarPessoa(pessoaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newPessoaDTO);
+    }
 
     @GetMapping
-    public ResponseEntity<List<Pessoa>> buscarPessoas(){
-        List<Pessoa> pessoas = pessoaService.buscarPessoas();
+    public ResponseEntity<List<PessoaDTO>> buscarPessoas(){
+        List<PessoaDTO> pessoas = pessoaService.buscarPessoas();
         return ResponseEntity.ok(pessoas);
     }
 }
