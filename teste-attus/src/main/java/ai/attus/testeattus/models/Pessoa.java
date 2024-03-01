@@ -3,6 +3,7 @@ package ai.attus.testeattus.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -16,6 +17,8 @@ public class Pessoa implements Serializable {
     private UUID id;
     @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
+    private Date dataNascimento;
     @Column(nullable = true)
     private UUID enderecoPrincipal;
 
@@ -26,9 +29,10 @@ public class Pessoa implements Serializable {
     public Pessoa() {
     }
 
-    public Pessoa(UUID id, String nome, UUID enderecoPrincipal, Set<Endereco> enderecos) {
+    public Pessoa(UUID id, String nome, Date dataNascimento, UUID enderecoPrincipal, Set<Endereco> enderecos) {
         this.id = id;
         this.nome = nome;
+        this.dataNascimento = dataNascimento;
         this.enderecoPrincipal = enderecoPrincipal;
         this.enderecos = enderecos;
     }
@@ -47,6 +51,14 @@ public class Pessoa implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public UUID getEnderecoPrincipal() {
