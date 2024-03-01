@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PessoaService implements IPessoaService{
@@ -23,6 +24,20 @@ public class PessoaService implements IPessoaService{
         BeanUtils.copyProperties(pessoaDTO, pessoa);
         pessoaRepository.save(pessoa);
         return pessoaDTO;
+    }
+
+    @Override
+    public PessoaDTO editarPessoa(PessoaDTO pessoaDTO, UUID id) {
+
+        Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+
+        Pessoa pessoaAtualizada = pessoa.atualizarDados(pessoaDTO);
+        pessoaRepository.save(pessoaAtualizada);
+
+        PessoaDTO pessoaDTOAtualizada = new PessoaDTO();
+        BeanUtils.copyProperties(pessoaAtualizada, pessoaDTOAtualizada);
+
+        return pessoaDTOAtualizada;
     }
 
     @Transactional

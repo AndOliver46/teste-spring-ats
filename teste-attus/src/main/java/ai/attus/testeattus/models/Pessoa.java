@@ -1,5 +1,6 @@
 package ai.attus.testeattus.models;
 
+import ai.attus.testeattus.dtos.PessoaDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -75,5 +76,12 @@ public class Pessoa implements Serializable {
 
     public void setEnderecos(Set<Endereco> enderecos) {
         this.enderecos = enderecos;
+    }
+
+    public Pessoa atualizarDados(PessoaDTO pessoaDTO){
+        this.nome = pessoaDTO.getNome() != null ? pessoaDTO.getNome() : this.nome;
+        this.dataNascimento = pessoaDTO.getDataNascimento() != null ? pessoaDTO.getDataNascimento() : this.dataNascimento;
+        this.enderecoPrincipal = pessoaDTO.getEnderecoPrincipal() != null ? pessoaDTO.getEnderecoPrincipal() : this.enderecoPrincipal;
+        return this;
     }
 }
