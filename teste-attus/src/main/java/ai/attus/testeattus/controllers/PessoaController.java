@@ -33,16 +33,17 @@ public class PessoaController {
 
         EntityModel<PessoaDTO> resource = EntityModel.of(newPessoaDTO);
         resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newPessoaDTO.getId())).withSelfRel());
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(newPessoaDTO, newPessoaDTO.getId())).withRel("editar"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<EntityModel<PessoaDTO>> editarPessoa(@RequestBody PessoaDTO pessoaDTO, @PathVariable UUID id){
         PessoaDTO newPessoaDTO = pessoaService.editarPessoa(pessoaDTO, id);
 
         EntityModel<PessoaDTO> resource = EntityModel.of(newPessoaDTO);
-        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(newPessoaDTO, newPessoaDTO.getId())).withRel("editar"));
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newPessoaDTO.getId())).withSelfRel());
 
         return ResponseEntity.ok(resource);
     }
@@ -63,6 +64,7 @@ public class PessoaController {
 
         List<EntityModel<PessoaDTO>> resources = pessoas.stream().map(pessoa -> {
             EntityModel<PessoaDTO> resource = EntityModel.of(pessoa);
+            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(pessoa.getId())).withSelfRel());
             resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoa, pessoa.getId())).withRel("editar"));
             return resource;
         }).toList();
