@@ -14,7 +14,7 @@ public class Endereco implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID endereco;
+    private UUID id;
     @Column(nullable = false)
     private String logradouro;
     @Column(nullable = false)
@@ -31,12 +31,12 @@ public class Endereco implements Serializable {
     @JsonIgnore
     private Pessoa pessoa;
 
-    public UUID getEndereco() {
-        return endereco;
+    public UUID getId() {
+        return id;
     }
 
-    public void setEndereco(UUID endereco) {
-        this.endereco = endereco;
+    public void setId(UUID endereco) {
+        this.id = endereco;
     }
 
     public String getLogradouro() {

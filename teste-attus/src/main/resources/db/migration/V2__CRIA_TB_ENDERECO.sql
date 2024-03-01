@@ -1,5 +1,5 @@
 CREATE TABLE tb_endereco (
-    endereco UUID PRIMARY KEY,
+    id UUID PRIMARY KEY,
     logradouro VARCHAR(255) NOT NULL,
     cep VARCHAR(10) NOT NULL,
     numero VARCHAR(10) NOT NULL,
