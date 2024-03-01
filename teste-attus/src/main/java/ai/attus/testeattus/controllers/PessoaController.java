@@ -5,6 +5,8 @@ import ai.attus.testeattus.services.IPessoaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,26 +27,45 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaDTO> criarPessoa(@RequestBody PessoaDTO pessoaDTO){
+    public ResponseEntity<EntityModel<PessoaDTO>> criarPessoa(@RequestBody PessoaDTO pessoaDTO){
         PessoaDTO newPessoaDTO = pessoaService.criarPessoa(pessoaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newPessoaDTO);
+
+        EntityModel<PessoaDTO> resource = EntityModel.of(newPessoaDTO);
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newPessoaDTO.getId())).withSelfRel());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaDTO> editarPessoa(@RequestBody PessoaDTO pessoaDTO, @PathVariable UUID id){
+    public ResponseEntity<EntityModel<PessoaDTO>> editarPessoa(@RequestBody PessoaDTO pessoaDTO, @PathVariable UUID id){
         PessoaDTO newPessoaDTO = pessoaService.editarPessoa(pessoaDTO, id);
-        return ResponseEntity.ok(newPessoaDTO);
+
+        EntityModel<PessoaDTO> resource = EntityModel.of(pessoaDTO);
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaDTO, pessoaDTO.getId())).withRel("editar"));
+
+        return ResponseEntity.ok(resource);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaDTO> buscarPessoa(@PathVariable UUID id){
+    public ResponseEntity<EntityModel<PessoaDTO>> buscarPessoa(@PathVariable UUID id){
         PessoaDTO pessoaDTO = pessoaService.buscarPessoa(id);
-        return ResponseEntity.ok(pessoaDTO);
+
+        EntityModel<PessoaDTO> resource = EntityModel.of(pessoaDTO);
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaDTO, pessoaDTO.getId())).withRel("editar"));
+
+        return ResponseEntity.ok(resource);
     }
 
     @GetMapping
-    public ResponseEntity<List<PessoaDTO>> buscarPessoas(Pageable pageable){
+    public ResponseEntity<List<EntityModel<PessoaDTO>>> buscarPessoas(Pageable pageable){
         List<PessoaDTO> pessoas = pessoaService.buscarPessoas(pageable);
-        return ResponseEntity.ok(pessoas);
+
+        List<EntityModel<PessoaDTO>> resources = pessoas.stream().map(pessoa -> {
+            EntityModel<PessoaDTO> resource = EntityModel.of(pessoa);
+            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoa, pessoa.getId())).withRel("editar"));
+            return resource;
+        }).toList();
+
+        return ResponseEntity.ok(resources);
     }
 }

@@ -5,11 +5,20 @@ import java.util.UUID;
 
 public class PessoaDTO {
 
+    private UUID id;
     private String nome;
     private Date dataNascimento;
     private UUID enderecoPrincipal;
 
     public PessoaDTO() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getNome() {
