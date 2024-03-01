@@ -1,15 +1,24 @@
 package ai.attus.testeattus.models;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_pessoa")
 public class Pessoa implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
     private UUID enderecoPrincipal;
+
+    //Association
+    @OneToMany(mappedBy = "pessoa")
     private Set<Endereco> enderecos = new HashSet<>();
 
     public UUID getId() {

@@ -1,19 +1,27 @@
 package ai.attus.testeattus.models;
 
 import ai.attus.testeattus.enums.Estado;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_endereco")
 public class Endereco implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID endereco;
     private String logradouro;
     private String cep;
     private String numero;
     private String cidade;
     private Estado estado;
+
+    @ManyToOne
+    private Pessoa pessoa;
 
     public UUID getEndereco() {
         return endereco;
@@ -61,6 +69,14 @@ public class Endereco implements Serializable {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     @Override
