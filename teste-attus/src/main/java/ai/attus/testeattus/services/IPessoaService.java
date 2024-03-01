@@ -1,8 +1,8 @@
 package ai.attus.testeattus.services;
 
 import ai.attus.testeattus.dtos.PessoaDTO;
+import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,5 +15,5 @@ public interface IPessoaService {
 
     PessoaDTO editarPessoa(PessoaDTO pessoaDTO, UUID id);
 
-    PessoaDTO buscarPessoa(UUID id);
+    PessoaEnderecoDTO buscarPessoa(UUID id);
 }

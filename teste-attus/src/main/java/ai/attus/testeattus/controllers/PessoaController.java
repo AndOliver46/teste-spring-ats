@@ -1,6 +1,7 @@
 package ai.attus.testeattus.controllers;
 
 import ai.attus.testeattus.dtos.PessoaDTO;
+import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
 import ai.attus.testeattus.services.IPessoaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,18 +41,18 @@ public class PessoaController {
     public ResponseEntity<EntityModel<PessoaDTO>> editarPessoa(@RequestBody PessoaDTO pessoaDTO, @PathVariable UUID id){
         PessoaDTO newPessoaDTO = pessoaService.editarPessoa(pessoaDTO, id);
 
-        EntityModel<PessoaDTO> resource = EntityModel.of(pessoaDTO);
-        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaDTO, pessoaDTO.getId())).withRel("editar"));
+        EntityModel<PessoaDTO> resource = EntityModel.of(newPessoaDTO);
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(newPessoaDTO, newPessoaDTO.getId())).withRel("editar"));
 
         return ResponseEntity.ok(resource);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<PessoaDTO>> buscarPessoa(@PathVariable UUID id){
-        PessoaDTO pessoaDTO = pessoaService.buscarPessoa(id);
+    public ResponseEntity<EntityModel<PessoaEnderecoDTO>> buscarPessoa(@PathVariable UUID id){
+        PessoaEnderecoDTO pessoaEnderecoDTO = pessoaService.buscarPessoa(id);
 
-        EntityModel<PessoaDTO> resource = EntityModel.of(pessoaDTO);
-        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaDTO, pessoaDTO.getId())).withRel("editar"));
+        EntityModel<PessoaEnderecoDTO> resource = EntityModel.of(pessoaEnderecoDTO);
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaEnderecoDTO, pessoaEnderecoDTO.getId())).withRel("editar"));
 
         return ResponseEntity.ok(resource);
     }
