@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,6 +38,30 @@ public class EnderecoController {
         //resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newEnderecoDTO.getId())).withSelfRel());
 
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EntityModel<EnderecoDTO>> consultarEndereco(@PathVariable UUID id){
+        EnderecoDTO newEnderecoDTO = enderecoService.consultarEndereco(id);
+
+        EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
+        //resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newEnderecoDTO.getId())).withSelfRel());
+
+        return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/pessoa/{idPessoa}")
+    public ResponseEntity<List<EntityModel<EnderecoDTO>>> consultarEnderecosPessoa(@PathVariable UUID idPessoa){
+        List<EnderecoDTO> enderecosList = enderecoService.consultarEnderecosPessoa(idPessoa);
+
+        List<EntityModel<EnderecoDTO>> resources = enderecosList.stream().map(endereco -> {
+            EntityModel<EnderecoDTO> resource = EntityModel.of(endereco);
+//            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(pessoa.getId())).withSelfRel());
+//            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoa, pessoa.getId())).withRel("editar"));
+            return resource;
+        }).toList();
+
+        return ResponseEntity.ok(resources);
     }
 
 

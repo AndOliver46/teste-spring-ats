@@ -45,7 +45,6 @@ public class PessoaService implements IPessoaService {
     }
 
     public PessoaEnderecoDTO buscarPessoaEndereco(UUID id) {
-
         Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
         PessoaEnderecoDTO pessoaDTO = new PessoaEnderecoDTO();
 

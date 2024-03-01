@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,7 +42,6 @@ public class EnderecoService implements IEnderecoService {
         return enderecoDTO;
     }
 
-    @Override
     public EnderecoDTO editarEndereco(EnderecoDTO enderecoDTO, UUID id) {
         Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
 
@@ -51,5 +51,25 @@ public class EnderecoService implements IEnderecoService {
         BeanUtils.copyProperties(endereco, enderecoDTO);
 
         return enderecoDTO;
+    }
+
+    public EnderecoDTO consultarEndereco(UUID id) {
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Excessao generica"));
+        EnderecoDTO enderecoDTO= new EnderecoDTO();
+
+        BeanUtils.copyProperties(endereco, enderecoDTO);
+
+        return enderecoDTO;
+    }
+
+    public List<EnderecoDTO> consultarEnderecosPessoa(UUID idPessoa) {
+        Pessoa pessoa = pessoaService.buscarPessoa(idPessoa);
+
+        return pessoa.getEnderecos().stream().map(endereco -> {
+            EnderecoDTO enderecoDTO = new EnderecoDTO();
+
+            BeanUtils.copyProperties(endereco, enderecoDTO);
+            return enderecoDTO;
+        }).toList();
     }
 }
