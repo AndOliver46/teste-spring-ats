@@ -3,6 +3,7 @@ package ai.attus.testeattus.controllers;
 import ai.attus.testeattus.dtos.EnderecoDTO;
 import ai.attus.testeattus.services.interfaces.IEnderecoService;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,8 @@ public class EnderecoController {
         EnderecoDTO newEnderecoDTO = enderecoService.criarEnderecoPessoa(enderecoDTO, idPessoa);
 
         EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
-        //resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newEnderecoDTO.getId())).withSelfRel());
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).consultarEndereco(newEnderecoDTO.getId())).withSelfRel());
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).editarEndereco(newEnderecoDTO, newEnderecoDTO.getId())).withRel("editar"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
@@ -35,7 +37,7 @@ public class EnderecoController {
         EnderecoDTO newEnderecoDTO = enderecoService.editarEndereco(enderecoDTO, id);
 
         EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
-        //resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newEnderecoDTO.getId())).withSelfRel());
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).consultarEndereco(newEnderecoDTO.getId())).withSelfRel());
 
         return ResponseEntity.ok(resource);
     }
@@ -45,7 +47,7 @@ public class EnderecoController {
         EnderecoDTO newEnderecoDTO = enderecoService.consultarEndereco(id);
 
         EntityModel<EnderecoDTO> resource = EntityModel.of(newEnderecoDTO);
-        //resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(newEnderecoDTO.getId())).withSelfRel());
+        resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).editarEndereco(newEnderecoDTO, newEnderecoDTO.getId())).withRel("editar"));
 
         return ResponseEntity.ok(resource);
     }
@@ -56,8 +58,8 @@ public class EnderecoController {
 
         List<EntityModel<EnderecoDTO>> resources = enderecosList.stream().map(endereco -> {
             EntityModel<EnderecoDTO> resource = EntityModel.of(endereco);
-//            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).buscarPessoa(pessoa.getId())).withSelfRel());
-//            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoa, pessoa.getId())).withRel("editar"));
+            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).consultarEndereco(endereco.getId())).withSelfRel());
+            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).editarEndereco(endereco, endereco.getId())).withRel("editar"));
             return resource;
         }).toList();
 

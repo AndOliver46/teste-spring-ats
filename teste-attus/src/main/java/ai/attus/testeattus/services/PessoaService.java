@@ -1,5 +1,6 @@
 package ai.attus.testeattus.services;
 
+import ai.attus.testeattus.dtos.EnderecoDTO;
 import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
 import ai.attus.testeattus.models.Pessoa;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -49,7 +51,13 @@ public class PessoaService implements IPessoaService {
         PessoaEnderecoDTO pessoaDTO = new PessoaEnderecoDTO();
 
         BeanUtils.copyProperties(pessoa, pessoaDTO);
-        pessoaDTO.setEnderecos(pessoa.getEnderecos());
+        pessoaDTO.setEnderecos(pessoa.getEnderecos().stream().map(endereco -> {
+            EnderecoDTO enderecoDTO = new EnderecoDTO();
+
+            BeanUtils.copyProperties(endereco, enderecoDTO);
+
+            return enderecoDTO;
+        }).collect(Collectors.toSet()));
 
         return pessoaDTO;
     }

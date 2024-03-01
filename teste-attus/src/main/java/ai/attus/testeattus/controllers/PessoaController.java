@@ -1,5 +1,6 @@
 package ai.attus.testeattus.controllers;
 
+import ai.attus.testeattus.dtos.EnderecoDTO;
 import ai.attus.testeattus.dtos.PessoaDTO;
 import ai.attus.testeattus.dtos.PessoaEnderecoDTO;
 import ai.attus.testeattus.services.interfaces.IPessoaService;
@@ -54,6 +55,10 @@ public class PessoaController {
 
         EntityModel<PessoaEnderecoDTO> resource = EntityModel.of(pessoaEnderecoDTO);
         resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PessoaController.class).editarPessoa(pessoaEnderecoDTO, pessoaEnderecoDTO.getId())).withRel("editar"));
+
+        for (EnderecoDTO endereco : pessoaEnderecoDTO.getEnderecos()) {
+            resource.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EnderecoController.class).consultarEndereco(endereco.getId())).withRel("endereco"));
+        }
 
         return ResponseEntity.ok(resource);
     }
