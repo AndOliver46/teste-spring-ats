@@ -1,15 +1,25 @@
-### Para executar esse projeto é necessário possuir:
+## Docker
+- Instale Docker + Docker-Compose .</br>
+- Abra o terminal na pasta onde o arquivo docker-compose.yml se encontra:</br>
+- Execute o comando:
+```
+$docker-compose up
+```
+- Enquanto o container do banco de dados não sobe, o app java ficará reinicalizando.</br>
 
-- Maven 3.9.6 (registrado no path do sistema);
-- Java na versão 21 (JAVA_HOME no path do sistema);
+## Maquina Local:
 
-### Passo a passo:
-
-- Abra o terminal na pasta do projeto:</br>
+- Instale Maven 3.9.6 (registrado no path do sistema);
+- Instale Java na versão 21 (JAVA_HOME no path do sistema);
+- Abra o terminal na pasta raiz do projeto e execute os comandos abaixo:</br>
+```
 $cd /teste-attus</br>
-
-- Execute o projeto SpringBoot:</br>
 $mvn clean install spring-boot:run</br>
+```
+
+### Class Diagram
+
+![image](https://github.com/AndOliver46/teste-spring-ats/assets/101358552/64727b6b-9510-4cae-ad79-f85632a0965b)
 
 ### Doc:
 
@@ -27,10 +37,6 @@ Flyway </br>
 H2 Database </br>
 Junit </br>
 Mockito </br>
-
-### Class Diagram
-
-![image](https://github.com/AndOliver46/teste-spring-ats/assets/101358552/64727b6b-9510-4cae-ad79-f85632a0965b)
 
 
 
