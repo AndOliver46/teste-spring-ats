@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    networks:
+      - master-network
+  myapp:
+    image: andoliver46/teste-attus:0.0.1-SNAPSHOT
+    restart: always
+    working_dir: /teste-attus
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:postgresql://db:5432/testdb
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - master-network
+networks:
+  master-network:
+    driver: bridge
